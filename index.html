@@ -2,13 +2,10 @@ no<!DOCTYPE html>
 <html lang="en">
 <head>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
-
-      // Custom event for the Claim Power button
+      gtag('config', 
       function trackClaimClick() {
         gtag('event', 'conversion', {
           'event_category': 'Engagement',
@@ -29,28 +26,25 @@ no<!DOCTYPE html>
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-        body, html { 
+        body, html 
             background: var(--obsidian); color: #fff; 
             font-family: 'Inter', -apple-system, sans-serif; overflow-x: hidden; height: 100%;
         }
-
-        /* 🔱 1. THE SLAM INTRO OVERLAY */
         #intro-overlay {
             position: fixed; inset: 0; background: #000; z-index: 50000;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: center
             transition: 1s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; text-align: center;
         }
 
-        .slam-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; padding: 20px; }
-        .letter { 
+        .slam-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; padding: 20px
+        .letter 
             font-size: clamp(35px, 9vw, 95px); font-weight: 900; opacity: 0; transform: scale(3);
-            background: linear-gradient(to bottom, #fff, var(--rose-gold));
+            background: linear-gradientto bottom, #fff, var(--rose-gold));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
         .letter.i-eye { text-transform: lowercase; font-style: italic; color: var(--cyan) !important; -webkit-text-fill-color: var(--cyan) !important; text-shadow: 0 0 25px var(--cyan); }
         @keyframes slamIn { to { opacity: 1; transform: scale(1); } }
-
-        /* 🔱 2. THE 9D GLASS HUB */
+        
         #main-hub { 
             display: none; opacity: 0; transition: 1.5s;
             padding: 20px; max-width: 1200px; margin: 0 auto;
@@ -136,11 +130,10 @@ no<!DOCTYPE html>
     </script>
 
     <script src="your-logic.js"></script>
+        
         const brandName = "KNOCKSSTUDiOS";
         const zone = document.getElementById('slam-zone');
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-        // 🔱 INIT ENGINE: Checks session storage to prevent back-and-forth loops
+        const audioCtx = new (window.AudioContext || window
         window.onload = () => {
             if (sessionStorage.getItem('knocks_initialized') === 'true') {
                 document.getElementById('intro-overlay').style.display = 'none';
@@ -220,8 +213,6 @@ function decodeA85(input) {
     // Your 9K logic here to convert the string back to a Uint8Array
     // This allows the TITANGINE to read the blueprint directly in the browser
     console.log("TITANGINE: Data Pulse Received.");
-}
 
-    </script>
 </body>
 </html>
