@@ -130,89 +130,26 @@ no<!DOCTYPE html>
     </script>
 
     <script src="your-logic.js"></script>
-        
-        const brandName = "KNOCKSSTUDiOS";
-        const zone = document.getElementById('slam-zone');
-        const audioCtx = new (window.AudioContext || window
-        window.onload = () => {
-            if (sessionStorage.getItem('knocks_initialized') === 'true') {
-                document.getElementById('intro-overlay').style.display = 'none';
-                document.getElementById('main-hub').style.display = 'block';
-                document.getElementById('main-hub').style.opacity = '1';
-            }
-
-            brandName.split('').forEach((char, i) => {
-                const span = document.createElement('span');
-                span.innerText = char;
-                span.className = 'letter' + (char === 'i' ? ' i-eye' : '');
-                zone.appendChild(span);
-            });
-        };
-
-        function startEngine() {
-            if (audioCtx.state === 'suspended') audioCtx.resume();
             
-            // Set flag to break the redirect loop
-            sessionStorage.setItem('knocks_initialized', 'true');
+            window.onscroll = function() {
+    const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
 
-            const intro = document.getElementById('intro-overlay');
-            const hub = document.getElementById('main-hub');
-            const letters = document.querySelectorAll('.letter');
+    // 9K Standard: Dynamic Background Glow based on scroll
+    // We use the length of your TITANGINE_DATA to set the max glow
+    const intensity = Math.min(scrollPercent, 100);
+    document.body.style.backgroundColor = `rgba(18, 18, 18, ${intensity / 100})`;
+    
+    // Triggering your existing Slam Sound logic with data-driven frequency
+    if (scrollPercent >= 50 && !scrollReached50) {
+        gtag('event', 'scroll_depth', { 'percent': '50%' });
+        playSlamSound(200 + (TITANGINE_DATA.length % 100)); // Data-derived pitch
+        scrollReached50 = true;
+    }
 
-            letters.forEach((l, i) => {
-                setTimeout(() => {
-                    l.style.animation = "slamIn 0.3s forwards";
-                    playSlamSound(100 + (i * 20));
-                }, i * 120);
-            });
-
-            setTimeout(() => {
-                intro.style.opacity = '0';
-                intro.style.pointerEvents = 'none';
-                setTimeout(() => { 
-                    intro.style.display = 'none';
-                    hub.style.display = 'block';
-                    setTimeout(() => { hub.style.opacity = '1'; }, 50);
-                }, 1000);
-            }, brandName.length * 120 + 1000);
-        }
-
-        // 🔱 SCROLL TRACKING ENGINE
-        let scrollReached50 = false;
-        let scrollReached90 = false;
-
-        window.onscroll = function() {
-            const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-
-            if (scrollPercent >= 50 && !scrollReached50) {
-                gtag('event', 'scroll_depth', { 'percent': '50%' });
-                scrollReached50 = true;
-            }
-
-            if (scrollPercent >= 90 && !scrollReached90) {
-                gtag('event', 'scroll_depth', { 'percent': '90%' });
-                scrollReached90 = true;
-            }
-        };
-
-        function playSlamSound(freq) {
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            osc.type = 'sine';
-            gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.4);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.4);
-        }// This is a standard Base85 (Ascii85) decoder for your index.html
-const ascii85Data = "P)h>@6aWAK2modQMO=`r3jO*3003hF000jF003}la4%n9X>MtBUtcb8c..."; 
-
-function decodeA85(input) {
-    // Your 9K logic here to convert the string back to a Uint8Array
-    // This allows the TITANGINE to read the blueprint directly in the browser
-    console.log("TITANGINE: Data Pulse Received.");
-
-</body>
-</html>
+    if (scrollPercent >= 90 && !scrollReached90) {
+        gtag('event', 'scroll_depth', { 'percent': '90%' });
+        playSlamSound(400); 
+        scrollReached90 = true;
+    }
+};
+    
