@@ -3,149 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LAB LEGENDS | KNOCKSSTUDiOS</title>
+    <title>9K TITANGINE | KNOCKSSTUDiOS</title>
     <style>
         :root {
             --rose-gold: #b76e79;
-            --bmw-red: #ff0000;
-            --shop-dark: #0d0d0d;
-            --memory-gold: #f7e7ce;
+            --tech-cyan: #00f2ff;
+            --9k-black: #050505;
+            --panel-bg: rgba(183, 110, 121, 0.05);
         }
 
         body, html {
             margin: 0; padding: 0;
-            background-color: #000;
-            color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--9k-black);
+            color: #fff;
+            font-family: 'Courier New', monospace;
             overflow-x: hidden;
-            transition: background-color 1.5s ease;
         }
 
-        /* --- STUDIO INTRO --- */
-        #studio-intro {
-            position: fixed; top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            background: black;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            z-index: 10000;
-            animation: fadeOutIntro 6s forwards;
+        /* --- THE SOVEREIGN PULSE INTRO --- */
+        #boot-sequence {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 10000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            animation: systemOnline 4s forwards;
         }
 
-        .knocks-logo {
-            font-size: 3.5rem; letter-spacing: 15px;
-            color: var(--rose-gold);
-            text-shadow: 0 0 20px var(--bmw-red);
-            margin: 0;
-            animation: logoSlam 1.8s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+        .eye-logo {
+            width: 100px; height: 100px; border: 2px solid var(--rose-gold);
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 0 30px var(--rose-gold);
+            animation: pulse 2s infinite alternate;
         }
 
-        .sub-logo { font-size: 1rem; letter-spacing: 5px; opacity: 0.7; }
-
-        /* --- CINEMATIC OVERLAYS --- */
-        #film-layer {
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 5;
-            transition: filter 2s ease;
+        /* --- THE DASHBOARD --- */
+        #main-engine {
+            opacity: 0; animation: fadeIn 1s forwards 4s;
+            padding: 20px; max-width: 1200px; margin: auto;
         }
 
-        .memory-active { filter: sepia(0.6) brightness(1.1); }
-        .shop-active { filter: grayscale(0.5) brightness(0.4) contrast(1.3); }
-
-        #bmw-taillight {
-            position: fixed; top: 20%; right: 10%;
-            width: 200px; height: 80px;
-            background: radial-gradient(circle, var(--bmw-red) 0%, transparent 70%);
-            opacity: 0; filter: blur(30px);
-            transition: opacity 1.5s ease;
+        .grid-container {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px; margin-top: 30px;
         }
 
-        /* --- CONTENT SCROLLING --- */
-        .content-section {
-            height: 150vh; display: flex;
-            justify-content: center; align-items: center;
-            text-align: center; padding: 40px;
+        .panel {
+            border: 1px solid var(--rose-gold); background: var(--panel-bg);
+            padding: 20px; transition: transform 0.3s;
         }
 
-        @keyframes logoSlam {
-            0% { transform: scale(8); opacity: 0; filter: blur(40px); }
-            100% { transform: scale(1); opacity: 1; filter: blur(0); }
+        .panel:hover { transform: translateY(-5px); border-color: var(--tech-cyan); }
+
+        /* --- UI ELEMENTS --- */
+        .btn {
+            background: var(--rose-gold); color: black; border: none;
+            padding: 10px 20px; cursor: pointer; font-weight: bold; width: 100%;
         }
 
-        @keyframes fadeOutIntro {
-            80% { opacity: 1; }
-            100% { opacity: 0; visibility: hidden; }
-        }
+        #radio-display { color: var(--tech-cyan); font-size: 1.5rem; text-align: center; }
+
+        @keyframes systemOnline { 85% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
+        @keyframes fadeIn { to { opacity: 1; } }
+        @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.1); } }
     </style>
 </head>
-<body class="memory-active">
+<body>
 
-    <div id="studio-intro">
-        <h1 class="knocks-logo">KNOCKSSTUDiOS</h1>
-        <p class="sub-logo">A LAB LEGENDS PRODUCTION</p>
+    <div id="boot-sequence">
+        <div class="eye-logo"><div style="width:20px; height:20px; background:var(--tech-cyan); border-radius:50%;"></div></div>
+        <h1 style="letter-spacing:10px; color:var(--rose-gold); margin-top:20px;">KNOCKSSTUDiOS</h1>
+        <p>INITIATING 9K STANDARD...</p>
     </div>
 
-    <div id="film-layer"></div>
-    <div id="bmw-taillight"></div>
+    <div id="main-engine">
+        <header style="border-bottom: 1px solid var(--rose-gold); padding-bottom: 10px;">
+            <h1 style="color: var(--rose-gold);">9K ULTRA TITANGINE // LAB LEGENDS</h1>
+            <div id="daily-wisdom" style="font-style: italic; color: #aaa;">"Loading today's pulse..."</div>
+        </header>
 
-    <section class="content-section">
-        <h2 id="narration-text">"Every story starts like no other..."</h2>
-    </section>
+        <div class="grid-container">
+            <div class="panel">
+                <h3>ACCESS GATEWAY</h3>
+                <button class="btn" onclick="alert('Initiating Sign Up...')">SIGN UP (JOIN THE LEGENDS)</button>
+                <button class="btn" style="margin-top:10px; background:none; border:1px solid var(--rose-gold); color:white;" onclick="alert('Awaiting Login...')">SIGN IN</button>
+            </div>
 
-    <section class="content-section">
-        <h2 id="narration-text-2">"But this story... is different."</h2>
-    </section>
+            <div class="panel">
+                <h3>9K RADIO NETWORK</h3>
+                <div id="radio-display">STATION: OFF</div>
+                <div style="display:flex; gap:10px; margin-top:20px;">
+                    <button class="btn" onclick="tuneRadio('92.3', 'THE STREETS')">92.3</button>
+                    <button class="btn" onclick="tuneRadio('101.5', 'THE LAB')">101.5</button>
+                    <button class="btn" onclick="tuneRadio('88.1', 'EDM PULSE')">88.1</button>
+                </div>
+                <p id="station-info" style="font-size: 0.8rem; margin-top:10px; opacity:0.6;"></p>
+            </div>
 
-    <script id="titangine-blueprint">
-        const TITANGINE_DATA = "P)h>@6aWAK2modQMO=`r3jO*3003hF000jF003}la4%n9X..."; // Your Ascii85 Block
-    </script>
+            <div class="panel">
+                <h3>MISSION STATUS</h3>
+                <p>2,000 COINS FOR THE LEGENDS</p>
+                <div style="width:100%; background:#222; height:10px;">
+                    <div style="width:15%; background:var(--tech-cyan); height:100%;"></div>
+                </div>
+                <p style="font-size:0.7rem;">PROGRESS: 300 / 2000</p>
+            </div>
+        </div>
+    </div>
 
     <script>
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        let slamPlayed = false;
+        // --- 9K WISDOM GENERATOR ---
+        const wisdom = [
+            "Poem: The scars you carry are the blueprints of your strength.",
+            "Quote: A King doesn't lead by permission; he leads by vision.",
+            "Poem: In the silence of the night, the engine hums the truth.",
+            "Quote: 2,000 Coins. 2,000 Legends. One Empire."
+        ];
+        
+        document.getElementById('daily-wisdom').innerText = wisdom[Math.floor(Math.random() * wisdom.length)];
 
-        // 9K SLAM SOUND LOGIC
-        function playSlamSound(freq) {
+        // --- THE AUDIO ENGINE ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function tuneRadio(freq, name) {
+            document.getElementById('radio-display').innerText = `STATION: ${freq}`;
+            document.getElementById('station-info').innerText = `NOW PLAYING: ${name}`;
+            playPulse(parseFloat(freq) * 2); // Dynamic sound generation based on frequency
+        }
+
+        function playPulse(pitch) {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.type = 'sine';
-            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(10, audioCtx.currentTime + 1);
-            gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 1);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 1);
+            osc.frequency.setValueAtTime(pitch, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 2);
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + 2);
         }
 
-        // SCROLL ENGINE
-        window.onscroll = function() {
-            const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-            const filmLayer = document.getElementById('film-layer');
-            const taillight = document.getElementById('bmw-taillight');
-
-            // TRANSITION AT 50%
-            if (scrollPercent >= 50 && !slamPlayed) {
-                playSlamSound(120);
-                document.body.classList.replace('memory-active', 'shop-active');
-                taillight.style.opacity = "0.7";
-                document.getElementById('narration-text-2').innerText = "The architect waits in the dark.";
-                slamPlayed = true;
-            } else if (scrollPercent < 50) {
-                document.body.classList.replace('shop-active', 'memory-active');
-                taillight.style.opacity = "0";
-                slamPlayed = false;
-            }
-        };
-
-        // STARTUP
-        window.onload = () => {
-            console.log("TITANGINE: 9K Standard Active.");
-            setTimeout(() => { playSlamSound(60); }, 500); // Intro Hit
-        };
+        window.onload = () => { console.log("9K TITANGINE: Online."); };
     </script>
 </body>
 </html>
