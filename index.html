@@ -2,165 +2,86 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>9K TITANGINE | KNOCKSSTUDiOS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>9K LEGEND LABS | KNOCKSSTUDiOS</title>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="KNOCKSSTUDiOS">
+    <meta name="description" content="Official 9K Sovereign Hub. Join the AI Lab Legends.">
+
     <style>
-        :root {
-            --sovereign-pulse: #b76e79; /* Rose Gold */
-            --sentinel-cyan: #00f2ff;
-            --9k-black: #000000;
-        }
+        :root { --rose-gold: #b76e79; --cyan: #00f2ff; --glass: rgba(255,255,255,0.05); --obsidian: #050505; --gold: #d4af37; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
+        body, html { background: var(--obsidian); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; height: 100%; }
 
-        body, html {
-            margin: 0; padding: 0;
-            background: var(--9k-black);
-            color: #fff;
-            font-family: 'Courier New', monospace;
-            height: 100vh; width: 100vw;
-            overflow: hidden;
+        /* 🔱 THE OVERLAY */
+        #intro-overlay {
+            position: fixed; inset: 0; background: #000; z-index: 50000;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: 1s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer;
         }
+        .slam-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; padding: 20px; }
+        .letter { font-size: clamp(35px, 9vw, 95px); font-weight: 900; opacity: 0; transform: scale(3); background: linear-gradient(to bottom, #fff, var(--rose-gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .letter.i-eye { text-transform: lowercase; font-style: italic; color: var(--cyan) !important; -webkit-text-fill-color: var(--cyan) !important; text-shadow: 0 0 25px var(--cyan); }
+        @keyframes slamIn { to { opacity: 1; transform: scale(1); } }
 
-        /* --- STAGE 1: THE CLEAN SLATE --- */
-        #eye-center {
-            position: fixed;
-            width: 60px; height: 60px;
-            border: 2px solid var(--sovereign-pulse);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 20px var(--sovereign-pulse);
-            z-index: 1000;
-            transition: all 1s ease;
-        }
-
-        #eye-pupil {
-            width: 15px; height: 15px;
-            background: var(--sentinel-cyan);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--sentinel-cyan);
-        }
-
-        /* --- STAGE 2: THE SENTINEL TILES --- */
-        #tile-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            opacity: 0;
-            transition: opacity 2s ease;
-            width: 100%;
-            max-width: 500px;
-        }
-
-        .sentinel-tile {
-            width: 100%;
-            padding: 25px;
-            background: rgba(183, 110, 121, 0.05);
-            border: 1px solid rgba(183, 110, 121, 0.3);
-            backdrop-filter: blur(10px);
-            text-align: center;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-            cursor: pointer;
-        }
-
-        .sentinel-tile:hover {
-            border-color: var(--sentinel-cyan);
-            background: rgba(0, 242, 255, 0.05);
-            box-shadow: 0 0 30px rgba(0, 242, 255, 0.2);
-        }
-
-        .tile-active { opacity: 1; transform: translateY(0); }
-
-        #wisdom-display {
-            position: fixed; top: 20px; text-align: center;
-            letter-spacing: 5px; color: var(--sovereign-pulse);
-            font-size: 0.8rem; opacity: 0; transition: 2s;
-        }
-
-        #radio-hub { margin-top: 10px; font-size: 0.7rem; color: var(--sentinel-cyan); }
+        /* 🔱 THE HUB */
+        #main-hub { display: none; opacity: 0; transition: 1.5s; padding: 20px; max-width: 1200px; margin: 0 auto; }
+        .glass-card { background: var(--glass); border: 1px solid rgba(183, 110, 121, 0.3); border-radius: 40px; backdrop-filter: blur(40px); padding: clamp(30px, 6vw, 60px); text-align: center; margin-bottom: 40px; }
+        .e-bot { width: 80px; height: 80px; border: 2px solid var(--cyan); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-weight: 900; color: var(--cyan); box-shadow: 0 0 25px var(--cyan); animation: pulse 2s infinite; font-style: italic; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        .btn-main { background: var(--rose-gold); color: #000; width: 100%; max-width: 450px; padding: 22px; border: none; border-radius: 60px; font-weight: 900; letter-spacing: 6px; cursor: pointer; text-transform: uppercase; margin-top: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 40px 0; }
+        .module { border: 1px solid rgba(255,255,255,0.1); padding: 30px; border-radius: 20px; background: rgba(0,0,0,0.4); text-align: left; }
     </style>
 </head>
-<body>
-
-    <div id="wisdom-display">TRADEMARK: KNOCKSSTUDiOS // MISSION: 2,000 COINS</div>
-
-    <div id="eye-center">
-        <div id="eye-pupil"></div>
+<body onclick="startEngine()">
+    <div id="intro-overlay">
+        <div id="slam-zone" class="slam-container"></div>
+        <p style="letter-spacing: 12px; color: var(--rose-gold); margin-top: 60px; font-size: 11px; animation: blink 1.5s infinite;">TAP TO INITIALIZE LEGEND LABS</p>
     </div>
-
-    <div id="tile-container">
-        <div class="sentinel-tile" onclick="alert('Legends Portal Opening...')">GATEWAY: SIGN IN / SIGN UP</div>
-        
-        <div class="sentinel-tile">
-            THE SCHOOL RADIO
-            <div id="radio-hub">STATION: 92.3 // THE STREETS</div>
-            <div style="display:flex; justify-content:center; gap:10px; margin-top:10px;">
-                <button onclick="tune('92.3')" style="background:none; border:1px solid #fff; color:#fff;">92.3</button>
-                <button onclick="tune('101.5')" style="background:none; border:1px solid #fff; color:#fff;">101.5</button>
-            </div>
+    <div id="main-hub">
+        <div class="glass-card">
+            <div class="e-bot">e</div>
+            <h1 style="letter-spacing: clamp(5px, 3vw, 20px); font-size: clamp(28px, 6vw, 75px);">KNOCKSSTUD<span class="i-eye">i</span>OS</h1>
+            <p style="opacity: 0.6; font-size: 12px; letter-spacing: 5px;">9K ULTRA TITAN ENGINE // 9K LEGEND LABS</p>
         </div>
-
-        <div class="sentinel-tile" id="daily-text">PULSE: LOADING WISDOM...</div>
-
-        <div class="sentinel-tile" style="border-style: dashed;">UPGRADE: SUBSCRIPTION TIERS</div>
+        <div class="grid">
+            <div class="module"><h3>SOVEREIGN VISION</h3><p style="opacity: 0.6; font-size: 13px;">Phase 01: Humble, Wise, Ambitious.</p></div>
+            <div class="module"><h3>9K RENDERS</h3><p style="opacity: 0.6; font-size: 13px;">Phase 02: 9D Glass & Flow Physics.</p></div>
+        </div>
+        <div class="glass-card">
+            <h2>LEGEND SUBSCRIPTION</h2>
+            <div style="font-size: clamp(45px, 8vw, 75px); font-weight: 900; color: var(--gold);">2,000 COINS</div>
+            <button class="btn-main" onclick="window.open('https://www.hollywoodimaging.studio')">CLAIM BOUNTY & JOIN</button>
+        </div>
     </div>
-
     <script>
+        const brand = "KNOCKSSTUDiOS";
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        let engineStarted = false;
-
-        const wisdom = [
-            "The architect builds while the world sleeps.",
-            "2,000 Coins. 2,000 Legends. No Permission.",
-            "The Eye sees the vision; the Engine makes it real.",
-            "Hard Knocks produce the sharpest steel."
-        ];
-
-        // --- THE STARTUP PULSE ---
-        window.onmousemove = () => {
-            if (!engineStarted) {
-                engineStarted = true;
-                initiatePulse();
-            }
-        };
-
-        function initiatePulse() {
-            // Audio Slam
-            playSlam(60);
-
-            // Visual Transition
-            document.getElementById('eye-center').style.transform = "translateY(-280px) scale(0.5)";
-            document.getElementById('wisdom-display').style.opacity = "1";
-            document.getElementById('tile-container').style.opacity = "1";
-            document.getElementById('daily-text').innerText = wisdom[Math.floor(Math.random()*wisdom.length)];
-
-            // Sequential Tile Materialization
-            const tiles = document.querySelectorAll('.sentinel-tile');
-            tiles.forEach((tile, i) => {
-                setTimeout(() => {
-                    tile.classList.add('tile-active');
-                    playSlam(200 + (i * 50), 0.1);
-                }, 500 + (i * 400));
-            });
-        }
-
-        function playSlam(freq, vol = 0.2) {
+        window.onload = () => { brand.split('').forEach((char, i) => {
+            const span = document.createElement('span'); span.innerText = char;
+            span.className = 'letter' + (char === 'i' ? ' i-eye' : '');
+            document.getElementById('slam-zone').appendChild(span);
+        }); };
+        function startEngine() {
             if (audioCtx.state === 'suspended') audioCtx.resume();
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(1, audioCtx.currentTime + 1);
-            gain.gain.setValueAtTime(vol, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1);
-            osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.start(); osc.stop(audioCtx.currentTime + 1);
+            const intro = document.getElementById('intro-overlay');
+            const hub = document.getElementById('main-hub');
+            document.querySelectorAll('.letter').forEach((l, i) => {
+                setTimeout(() => { l.style.animation = "slamIn 0.3s forwards"; playSlam(120 + (i * 15)); }, i * 130);
+            });
+            setTimeout(() => {
+                intro.style.opacity = '0'; intro.style.pointerEvents = 'none';
+                setTimeout(() => { intro.style.display = 'none'; hub.style.display = 'block'; setTimeout(() => hub.style.opacity = '1', 50); }, 1000);
+            }, brand.length * 130 + 800);
         }
-
-        function tune(station) {
-            document.getElementById('radio-hub').innerText = `STATION: ${station} // CONNECTED`;
-            playSlam(parseFloat(station), 0.2);
+        function playSlam(freq) {
+            const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime); osc.type = 'sine';
+            gain.gain.setValueAtTime(0.05, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.3);
+            osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + 0.3);
         }
     </script>
 </body>
