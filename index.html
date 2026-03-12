@@ -6,13 +6,12 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX'); // REPLACE G-XXXXXXXXXX WITH YOUR REAL ID FROM GOOGLE
+      gtag('config', 'G-XXXXXXXXXX'); // Replace with your actual ID from Google if you have it
 
       function trackClaimClick() {
-        gtag('event', 'conversion', {
-          'event_category': 'Engagement',
-          'event_label': 'Claim Power Button'
-        });
+        if(typeof gtag === 'function') {
+          gtag('event', 'conversion', { 'event_category': 'Engagement', 'event_label': 'Claim Power Button' });
+        }
         window.open('https://www.hollywoodimaging.studio', '_blank');
       }
     </script>
