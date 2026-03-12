@@ -1,6 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX'); // REPLACE G-XXXXXXXXXX WITH YOUR REAL ID FROM GOOGLE
+
+      function trackClaimClick() {
+        gtag('event', 'conversion', {
+          'event_category': 'Engagement',
+          'event_label': 'Claim Power Button'
+        });
+        window.open('https://www.hollywoodimaging.studio', '_blank');
+      }
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>9K LEGEND LABS | KNOCKSSTUDiOS</title>
@@ -15,7 +31,6 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
         body, html { background: var(--obsidian); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; height: 100%; }
 
-        /* 🔱 THE OVERLAY (FIXED TRIGGER) */
         #intro-overlay {
             position: fixed; inset: 0; background: #000; z-index: 50000;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -26,7 +41,6 @@
         .letter.i-eye { text-transform: lowercase; font-style: italic; color: var(--cyan) !important; -webkit-text-fill-color: var(--cyan) !important; text-shadow: 0 0 25px var(--cyan); }
         @keyframes slamIn { to { opacity: 1; transform: scale(1); } }
 
-        /* 🔱 THE MAIN HUB */
         #main-hub { display: none; opacity: 0; transition: 1.5s; padding: 20px; max-width: 1200px; margin: 0 auto; }
         .glass-card { background: var(--glass); border: 1px solid rgba(183, 110, 121, 0.3); border-radius: 40px; backdrop-filter: blur(40px); padding: clamp(30px, 6vw, 60px); text-align: center; margin-bottom: 40px; box-shadow: 0 40px 100px rgba(0,0,0,0.8); }
         .e-bot { width: 80px; height: 80px; border: 2px solid var(--cyan); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-weight: 900; color: var(--cyan); box-shadow: 0 0 25px var(--cyan); animation: pulse 2s infinite; font-style: italic; }
@@ -50,10 +64,6 @@
             <div class="e-bot">e</div>
             <h1 style="letter-spacing: clamp(5px, 3vw, 20px); font-size: clamp(28px, 6vw, 75px);">KNOCKSSTUD<span class="i-eye">i</span>OS</h1>
             <p style="opacity: 0.6; font-size: 12px; letter-spacing: 5px;">9K ULTRA TITAN ENGINE // 9K LEGEND LABS</p>
-            <div style="margin-top: 30px;">
-                <button class="btn-radio">TRAP RADIO</button>
-                <button class="btn-radio">PHONK VAULT</button>
-            </div>
         </div>
 
         <div class="grid">
@@ -64,7 +74,7 @@
         <div class="glass-card">
             <h2 style="letter-spacing: 12px; font-size: 20px;">LEGEND SUBSCRIPTION</h2>
             <div style="font-size: clamp(45px, 8vw, 75px); font-weight: 900; color: var(--gold);">2,000 COINS</div>
-            <button class="btn-main" onclick="window.open('https://www.hollywoodimaging.studio')">CLAIM BOUNTY & JOIN</button>
+            <button class="btn-main" onclick="trackClaimClick()">CLAIM BOUNTY & JOIN</button>
         </div>
     </div>
 
@@ -82,7 +92,6 @@
         function startEngine() {
             if (initialized) return;
             initialized = true;
-
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const intro = document.getElementById('intro-overlay');
             const hub = document.getElementById('main-hub');
@@ -109,5 +118,6 @@
             osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + 0.3);
         }
     </script>
+    <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
