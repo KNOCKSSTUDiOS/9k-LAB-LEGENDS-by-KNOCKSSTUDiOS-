@@ -8,14 +8,14 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="KNOCKSSTUDiOS">
-    <meta name="description" content="Official 9K Sovereign Hub. Join the AI Lab Legends.">
+    <meta name="description" content="Official 9K Sovereign Hub. Join the AI Lab Legends and the School of Hard Knocks. Claim your 2,000 Coin Bounty.">
 
     <style>
         :root { --rose-gold: #b76e79; --cyan: #00f2ff; --glass: rgba(255,255,255,0.05); --obsidian: #050505; --gold: #d4af37; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
         body, html { background: var(--obsidian); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; height: 100%; }
 
-        /* 🔱 THE OVERLAY */
+        /* 🔱 THE OVERLAY (FIXED TRIGGER) */
         #intro-overlay {
             position: fixed; inset: 0; background: #000; z-index: 50000;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -26,12 +26,15 @@
         .letter.i-eye { text-transform: lowercase; font-style: italic; color: var(--cyan) !important; -webkit-text-fill-color: var(--cyan) !important; text-shadow: 0 0 25px var(--cyan); }
         @keyframes slamIn { to { opacity: 1; transform: scale(1); } }
 
-        /* 🔱 THE HUB */
+        /* 🔱 THE MAIN HUB */
         #main-hub { display: none; opacity: 0; transition: 1.5s; padding: 20px; max-width: 1200px; margin: 0 auto; }
-        .glass-card { background: var(--glass); border: 1px solid rgba(183, 110, 121, 0.3); border-radius: 40px; backdrop-filter: blur(40px); padding: clamp(30px, 6vw, 60px); text-align: center; margin-bottom: 40px; }
+        .glass-card { background: var(--glass); border: 1px solid rgba(183, 110, 121, 0.3); border-radius: 40px; backdrop-filter: blur(40px); padding: clamp(30px, 6vw, 60px); text-align: center; margin-bottom: 40px; box-shadow: 0 40px 100px rgba(0,0,0,0.8); }
         .e-bot { width: 80px; height: 80px; border: 2px solid var(--cyan); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-weight: 900; color: var(--cyan); box-shadow: 0 0 25px var(--cyan); animation: pulse 2s infinite; font-style: italic; }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        
         .btn-main { background: var(--rose-gold); color: #000; width: 100%; max-width: 450px; padding: 22px; border: none; border-radius: 60px; font-weight: 900; letter-spacing: 6px; cursor: pointer; text-transform: uppercase; margin-top: 20px; }
+        .btn-radio { background: none; border: 1px solid var(--rose-gold); color: var(--rose-gold); padding: 12px 25px; border-radius: 8px; font-weight: 900; font-size: 11px; cursor: pointer; margin: 5px; }
+
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 40px 0; }
         .module { border: 1px solid rgba(255,255,255,0.1); padding: 30px; border-radius: 20px; background: rgba(0,0,0,0.4); text-align: left; }
     </style>
@@ -41,42 +44,64 @@
         <div id="slam-zone" class="slam-container"></div>
         <p style="letter-spacing: 12px; color: var(--rose-gold); margin-top: 60px; font-size: 11px; animation: blink 1.5s infinite;">TAP TO INITIALIZE LEGEND LABS</p>
     </div>
+
     <div id="main-hub">
         <div class="glass-card">
             <div class="e-bot">e</div>
             <h1 style="letter-spacing: clamp(5px, 3vw, 20px); font-size: clamp(28px, 6vw, 75px);">KNOCKSSTUD<span class="i-eye">i</span>OS</h1>
             <p style="opacity: 0.6; font-size: 12px; letter-spacing: 5px;">9K ULTRA TITAN ENGINE // 9K LEGEND LABS</p>
+            <div style="margin-top: 30px;">
+                <button class="btn-radio">TRAP RADIO</button>
+                <button class="btn-radio">PHONK VAULT</button>
+            </div>
         </div>
+
         <div class="grid">
             <div class="module"><h3>SOVEREIGN VISION</h3><p style="opacity: 0.6; font-size: 13px;">Phase 01: Humble, Wise, Ambitious.</p></div>
             <div class="module"><h3>9K RENDERS</h3><p style="opacity: 0.6; font-size: 13px;">Phase 02: 9D Glass & Flow Physics.</p></div>
         </div>
+
         <div class="glass-card">
-            <h2>LEGEND SUBSCRIPTION</h2>
+            <h2 style="letter-spacing: 12px; font-size: 20px;">LEGEND SUBSCRIPTION</h2>
             <div style="font-size: clamp(45px, 8vw, 75px); font-weight: 900; color: var(--gold);">2,000 COINS</div>
             <button class="btn-main" onclick="window.open('https://www.hollywoodimaging.studio')">CLAIM BOUNTY & JOIN</button>
         </div>
     </div>
+
     <script>
         const brand = "KNOCKSSTUDiOS";
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let initialized = false;
+
         window.onload = () => { brand.split('').forEach((char, i) => {
             const span = document.createElement('span'); span.innerText = char;
             span.className = 'letter' + (char === 'i' ? ' i-eye' : '');
             document.getElementById('slam-zone').appendChild(span);
         }); };
+
         function startEngine() {
+            if (initialized) return;
+            initialized = true;
+
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const intro = document.getElementById('intro-overlay');
             const hub = document.getElementById('main-hub');
+
             document.querySelectorAll('.letter').forEach((l, i) => {
                 setTimeout(() => { l.style.animation = "slamIn 0.3s forwards"; playSlam(120 + (i * 15)); }, i * 130);
             });
+
             setTimeout(() => {
-                intro.style.opacity = '0'; intro.style.pointerEvents = 'none';
-                setTimeout(() => { intro.style.display = 'none'; hub.style.display = 'block'; setTimeout(() => hub.style.opacity = '1', 50); }, 1000);
+                intro.style.opacity = '0';
+                intro.style.pointerEvents = 'none';
+                setTimeout(() => { 
+                    intro.style.display = 'none'; 
+                    hub.style.display = 'block'; 
+                    setTimeout(() => hub.style.opacity = '1', 50); 
+                }, 1000);
             }, brand.length * 130 + 800);
         }
+
         function playSlam(freq) {
             const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
             osc.frequency.setValueAtTime(freq, audioCtx.currentTime); osc.type = 'sine';
