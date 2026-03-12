@@ -2,143 +2,185 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>9K LEGEND LABS | KNOCKSSTUDiOS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KNOCKSSTUDiOS | The Sovereign Pulse</title>
     <style>
         :root {
-            --rose-gold: #b76e79;
-            --cyan: #00f2ff;
-            --obsidian: #050505;
-            --glass: rgba(255, 255, 255, 0.05);
-            --gold: #d4af37;
+            --glass: rgba(255, 255, 255, 0.1);
+            --gold: #ffd700;
+            --mechanical-i: #b8860b;
         }
 
         body, html {
-            background: var(--obsidian);
-            color: #fff;
-            font-family: 'Inter', 'Courier New', monospace;
             margin: 0;
-            overflow-x: hidden;
+            padding: 0;
             height: 100%;
+            background: #000;
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
+            color: white;
         }
 
-        /* --- THE TITANGINE INTRO --- */
-        #intro-overlay {
-            position: fixed; inset: 0; background: #000; z-index: 9999;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: 1s cubic-bezier(0.4, 0, 0.2, 1);
+        /* Screensaver Style 3D Bubbly Letters */
+        #screensaver {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .eye-logo {
-            width: 120px; height: 120px;
-            border: 2px solid var(--rose-gold);
-            border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 0 40px var(--rose-gold);
-            animation: pulseExpand 2s infinite alternate;
+        .floating-logo {
+            font-size: 5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            background: linear-gradient(135deg, #fff, var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 10px 20px rgba(255,215,0,0.3));
+            animation: float 15s ease-in-out infinite;
         }
 
-        .eye-inner { width: 30px; height: 30px; background: var(--cyan); border-radius: 50%; box-shadow: 0 0 15px var(--cyan); }
-
-        /* --- LOGIN GATE --- */
-        #login-gate {
-            display: none; position: fixed; inset: 0; z-index: 8000;
-            background: var(--obsidian); justify-content: center; align-items: center;
+        .lowercase-i {
+            -webkit-text-fill-color: var(--mechanical-i);
+            font-style: italic;
+            text-shadow: 0 0 10px var(--gold);
         }
 
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate3d(1, 1, 1, 0deg); }
+            25% { transform: translate(20vw, -30vh) rotate3d(1, 0, 1, 90deg); }
+            50% { transform: translate(-10vw, 20vh) rotate3d(0, 1, 1, 180deg); }
+            75% { transform: translate(-25vw, -15vh) rotate3d(1, 1, 0, 270deg); }
+        }
+
+        /* Login Container */
         .login-card {
-            background: var(--glass); border: 1px solid var(--rose-gold);
-            padding: 40px; border-radius: 30px; backdrop-filter: blur(20px);
-            text-align: center; width: 90%; max-width: 400px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 3rem;
+            border-radius: 20px;
+            width: 350px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
         }
 
         input {
-            width: 100%; padding: 15px; margin: 10px 0;
-            background: rgba(255,255,255,0.1); border: 1px solid var(--cyan);
-            border-radius: 10px; color: #fff; text-align: center;
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid var(--gold);
+            color: white;
+            border-radius: 5px;
+            box-sizing: border-box;
         }
 
-        .btn-9k {
-            background: var(--rose-gold); color: #000; width: 100%;
-            padding: 15px; border: none; border-radius: 10px;
-            font-weight: 900; cursor: pointer; margin-top: 10px;
+        button {
+            width: 100%;
+            padding: 15px;
+            background: var(--gold);
+            color: black;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
         }
 
-        /* --- MAIN HUB --- */
-        #main-hub { display: none; opacity: 0; transition: 1.5s; padding: 20px; max-width: 1200px; margin: 0 auto; }
-        .e-bot { width: 60px; height: 60px; border: 2px solid var(--cyan); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; color: var(--cyan); box-shadow: 0 0 20px var(--cyan); font-style: italic; font-weight: 900; }
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--gold);
+        }
 
-        @keyframes pulseExpand { from { transform: scale(1); opacity: 0.8; } to { transform: scale(1.1); opacity: 1; } }
+        #adminPanel, #secondLogin { display: none; }
     </style>
 </head>
 <body>
 
-    <div id="intro-overlay" onclick="initializeEngine()">
-        <div class="eye-logo"><div class="eye-inner"></div></div>
-        <h2 style="margin-top: 30px; letter-spacing: 10px; color: var(--rose-gold);">KNOCKSSTUDiOS</h2>
-        <p style="font-size: 10px; opacity: 0.5; margin-top: 10px;">TAP TO INITIALIZE 9K CORE</p>
+    <div id="screensaver">
+        <div class="floating-logo">KNOCKS STUD<span class="lowercase-i">i</span>OS</div>
     </div>
 
-    <div id="login-gate">
-        <div class="login-card">
-            <h2 style="color: var(--rose-gold); letter-spacing: 5px;">LEGEND LOGIN</h2>
-            <input type="text" id="username" placeholder="LEGEND NAME">
-            <input type="password" id="passkey" placeholder="SECURE PASSKEY">
-            <button class="btn-9k" onclick="validateLegend()">ENTER THE LAB</button>
-        </div>
+    <div id="loginScreen" class="login-card">
+        <h2 style="text-align: center;">LOGIN</h2>
+        <input type="text" id="user" placeholder="Username">
+        <input type="password" id="pass" placeholder="Password">
+        <button onclick="handleLogin()">ENTER</button>
+        <p style="font-size: 0.8rem; text-align: center; margin-top: 15px; opacity: 0.7;">
+            9K Standard Engine Active | Background Bots: Online
+        </p>
     </div>
 
-    <div id="main-hub">
-        <div style="text-align: center; padding: 40px 0;">
-            <div class="e-bot">e</div>
-            <h1 style="letter-spacing: 15px;">KNOCKSSTUD<span style="text-transform: lowercase; font-style: italic; color: var(--cyan);">i</span>OS</h1>
-            <div style="color: var(--gold); font-size: 24px; font-weight: 900; margin-top: 20px;">2,000 COINS ACTIVE</div>
-        </div>
-        <div style="border: 1px solid var(--glass); padding: 20px; border-radius: 20px;">
-            <h3>MISSION: SCHOOL OF HARD KNOCKS</h3>
-            <p style="opacity: 0.6;">Status: Sovereign Pulse Active. Welcome home, Legend.</p>
+    <div id="secondLogin" class="login-card">
+        <h2 style="text-align: center; color: var(--gold);">SECURE ACCESS</h2>
+        <p style="text-align: center;">Enter Key to Proceed</p>
+        <input type="password" id="secretKey" placeholder="Master Key">
+        <button onclick="verifyMaster()">ACTIVATE ENGINE</button>
+    </div>
+
+    <div id="adminPanel" class="login-card" style="width: 80%; height: 80%; overflow-y: auto;">
+        <h1>Owner Control Center</h1>
+        <hr>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="glass-module">
+                <h3>Employee Management</h3>
+                <button onclick="alert('Accessing Payroll...')">Checks & Payroll</button>
+                <button onclick="alert('Adding Employee...')">Hire New Staff</button>
+            </div>
+            <div class="glass-module">
+                <h3>Background Pulse (Bots)</h3>
+                <ul>
+                    <li>Auto-Backup: <span style="color: lime;">Active</span></li>
+                    <li>Engine Updates: <span style="color: lime;">Running (Silent)</span></li>
+                    <li>File Sync: <span style="color: lime;">Stable</span></li>
+                </ul>
+            </div>
         </div>
     </div>
 
     <script>
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        // Use your specific "Sovereign" logic
+        function handleLogin() {
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
 
-        function initializeEngine() {
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-            document.getElementById('intro-overlay').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('intro-overlay').style.display = 'none';
-                // Check if already logged in
-                if (localStorage.getItem('legend_session') === 'active') {
-                    showHub();
-                } else {
-                    document.getElementById('login-gate').style.display = 'flex';
-                }
-            }, 1000);
-        }
-
-        function validateLegend() {
-            const user = document.getElementById('username').value;
-            const pass = document.getElementById('passkey').value;
-
-            // Basic validation - You can expand this logic later
-            if (user !== "" && pass !== "") {
-                localStorage.setItem('legend_session', 'active');
-                document.getElementById('login-gate').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('login-gate').style.display = 'none';
-                    showHub();
-                }, 500);
-            } else {
-                alert("The Eye requires a valid Legend Name and Passkey.");
+            // Scenario 1: Regular Admin (KNOCKSSTUDIOS / adamant)
+            if (u === "KNOCKSSTUDIOS" && p === "adamant") {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+            } 
+            // Scenario 2: Trigger Second Login (adamant / [your hidden key])
+            else if (u === "adamant") {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('secondLogin').style.display = 'block';
+            } 
+            else {
+                alert("Access Denied. Check credentials.");
             }
         }
 
-        function showHub() {
-            const hub = document.getElementById('main-hub');
-            hub.style.display = 'block';
-            setTimeout(() => hub.style.opacity = '1', 50);
+        function verifyMaster() {
+            // This is where you put your secret master key logic
+            const key = document.getElementById('secretKey').value;
+            if (key !== "") { // Put your key inside the quotes
+                document.getElementById('secondLogin').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+                console.log("Sovereign Pulse Active. Backups running.");
+            }
         }
+
+        // Background "Bot" Simulation - Handles errors without crashing
+        setInterval(() => {
+            console.log("Pulse Bot: Checking system health... All backups secure.");
+        }, 30000);
     </script>
 </body>
 </html>
