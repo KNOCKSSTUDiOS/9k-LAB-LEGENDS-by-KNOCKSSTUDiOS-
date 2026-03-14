@@ -2,185 +2,116 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KNOCKSSTUDiOS | The Sovereign Pulse</title>
+    <title>Knox Studios - Tactical 9k Ultra</title>
     <style>
-        :root {
-            --glass: rgba(255, 255, 255, 0.1);
-            --gold: #ffd700;
-            --mechanical-i: #b8860b;
+        body { margin: 0; background-color: #000; overflow: hidden; font-family: 'Courier New', monospace; }
+        canvas { display: block; }
+        #overlay {
+            position: absolute; top: 20px; left: 20px; color: #00f0ff;
+            text-shadow: 0 0 5px #00f0ff; pointer-events: none;
         }
-
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            background: #000;
-            font-family: 'Segoe UI', sans-serif;
-            overflow: hidden;
-            color: white;
-        }
-
-        /* Screensaver Style 3D Bubbly Letters */
-        #screensaver {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .floating-logo {
-            font-size: 5rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            background: linear-gradient(135deg, #fff, var(--gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 10px 20px rgba(255,215,0,0.3));
-            animation: float 15s ease-in-out infinite;
-        }
-
-        .lowercase-i {
-            -webkit-text-fill-color: var(--mechanical-i);
-            font-style: italic;
-            text-shadow: 0 0 10px var(--gold);
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate3d(1, 1, 1, 0deg); }
-            25% { transform: translate(20vw, -30vh) rotate3d(1, 0, 1, 90deg); }
-            50% { transform: translate(-10vw, 20vh) rotate3d(0, 1, 1, 180deg); }
-            75% { transform: translate(-25vw, -15vh) rotate3d(1, 1, 0, 270deg); }
-        }
-
-        /* Login Container */
-        .login-card {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 3rem;
-            border-radius: 20px;
-            width: 350px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            background: rgba(0,0,0,0.5);
-            border: 1px solid var(--gold);
-            color: white;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-
-        button {
-            width: 100%;
-            padding: 15px;
-            background: var(--gold);
-            color: black;
-            font-weight: bold;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px var(--gold);
-        }
-
-        #adminPanel, #secondLogin { display: none; }
     </style>
 </head>
 <body>
-
-    <div id="screensaver">
-        <div class="floating-logo">KNOCKS STUD<span class="lowercase-i">i</span>OS</div>
+    <div id="overlay">
+        <h1>SATELLITE FEED: 9K ULTRA TITAN</h1>
+        <p>STATUS: LEGEND AWAKENED // ONLINE</p>
+        <p>LOCATION: KNOX STUDIOS MANSION</p>
     </div>
+    <canvas id="radarCanvas"></canvas>
 
-    <div id="loginScreen" class="login-card">
-        <h2 style="text-align: center;">LOGIN</h2>
-        <input type="text" id="user" placeholder="Username">
-        <input type="password" id="pass" placeholder="Password">
-        <button onclick="handleLogin()">ENTER</button>
-        <p style="font-size: 0.8rem; text-align: center; margin-top: 15px; opacity: 0.7;">
-            9K Standard Engine Active | Background Bots: Online
-        </p>
-    </div>
+<script>
+const canvas = document.getElementById('radarCanvas');
+const ctx = canvas.getContext('2d');
 
-    <div id="secondLogin" class="login-card">
-        <h2 style="text-align: center; color: var(--gold);">SECURE ACCESS</h2>
-        <p style="text-align: center;">Enter Key to Proceed</p>
-        <input type="password" id="secretKey" placeholder="Master Key">
-        <button onclick="verifyMaster()">ACTIVATE ENGINE</button>
-    </div>
+let width, height;
+let zoom = 1;
+let linePosH = 0; // Horizontal line position
+let linePosV = 0; // Vertical line position
 
-    <div id="adminPanel" class="login-card" style="width: 80%; height: 80%; overflow-y: auto;">
-        <h1>Owner Control Center</h1>
-        <hr>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-            <div class="glass-module">
-                <h3>Employee Management</h3>
-                <button onclick="alert('Accessing Payroll...')">Checks & Payroll</button>
-                <button onclick="alert('Adding Employee...')">Hire New Staff</button>
-            </div>
-            <div class="glass-module">
-                <h3>Background Pulse (Bots)</h3>
-                <ul>
-                    <li>Auto-Backup: <span style="color: lime;">Active</span></li>
-                    <li>Engine Updates: <span style="color: lime;">Running (Silent)</span></li>
-                    <li>File Sync: <span style="color: lime;">Stable</span></li>
-                </ul>
-            </div>
-        </div>
-    </div>
+function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+}
 
-    <script>
-        // Use your specific "Sovereign" logic
-        function handleLogin() {
-            const u = document.getElementById('user').value;
-            const p = document.getElementById('pass').value;
+window.addEventListener('resize', resize);
+resize();
 
-            // Scenario 1: Regular Admin (KNOCKSSTUDIOS / adamant)
-            if (u === "KNOCKSSTUDIOS" && p === "adamant") {
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('adminPanel').style.display = 'block';
-            } 
-            // Scenario 2: Trigger Second Login (adamant / [your hidden key])
-            else if (u === "adamant") {
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('secondLogin').style.display = 'block';
-            } 
-            else {
-                alert("Access Denied. Check credentials.");
-            }
-        }
+function drawGrid() {
+    ctx.strokeStyle = "rgba(0, 100, 255, 0.3)";
+    ctx.lineWidth = 1;
+    const gridSize = 50 * zoom;
 
-        function verifyMaster() {
-            // This is where you put your secret master key logic
-            const key = document.getElementById('secretKey').value;
-            if (key !== "") { // Put your key inside the quotes
-                document.getElementById('secondLogin').style.display = 'none';
-                document.getElementById('adminPanel').style.display = 'block';
-                console.log("Sovereign Pulse Active. Backups running.");
-            }
-        }
+    for (let x = 0; x < width; x += gridSize) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, height); ctx.stroke();
+    }
+    for (let y = 0; y < height; y += gridSize) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y); ctx.stroke();
+    }
+}
 
-        // Background "Bot" Simulation - Handles errors without crashing
-        setInterval(() => {
-            console.log("Pulse Bot: Checking system health... All backups secure.");
-        }, 30000);
-    </script>
+function drawStructures() {
+    // Knox Studios - Represented as high-tech geometric blocks
+    ctx.fillStyle = "rgba(0, 150, 255, 0.5)";
+    ctx.strokeStyle = "#00f0ff";
+    ctx.lineWidth = 2;
+
+    const centerX = width / 2;
+    const centerY = height / 2;
+
+    // The Main Studio Block
+    const size = 150 * zoom;
+    ctx.fillRect(centerX - size/2, centerY - size/2, size, size);
+    ctx.strokeRect(centerX - size/2, centerY - size/2, size, size);
+
+    // Labels
+    ctx.fillStyle = "#00f0ff";
+    ctx.fillText("KNOX STUDIOS HQ", centerX - size/2, centerY - size/2 - 10);
+}
+
+function drawScope() {
+    const cx = width / 2;
+    const cy = height / 2;
+    const gap = 20 / zoom; // Lines don't touch in the middle
+    const length = 100 / zoom;
+
+    ctx.strokeStyle = "#00f0ff";
+    ctx.lineWidth = 3;
+
+    // Scope Lines - different paces
+    linePosH = (Date.now() / 15) % width;
+    linePosV = (Date.now() / 20) % height;
+
+    // The 4 Corner Points (Crosshair)
+    // Top
+    ctx.beginPath(); ctx.moveTo(cx, cy - gap); ctx.lineTo(cx, cy - gap - length); ctx.stroke();
+    // Bottom
+    ctx.beginPath(); ctx.moveTo(cx, cy + gap); ctx.lineTo(cx, cy + gap + length); ctx.stroke();
+    // Left
+    ctx.beginPath(); ctx.moveTo(cx - gap, cy); ctx.lineTo(cx - gap - length, cy); ctx.stroke();
+    // Right
+    ctx.beginPath(); ctx.moveTo(cx + gap, cy); ctx.lineTo(cx + gap + length, cy); ctx.stroke();
+}
+
+function animate() {
+    ctx.fillStyle = "rgba(0, 10, 30, 1)";
+    ctx.fillRect(0, 0, width, height);
+
+    // Simulate zooming effect
+    zoom = 1 + Math.sin(Date.now() / 2000) * 0.2;
+
+    drawGrid();
+    drawStructures();
+    drawScope();
+
+    // Scanning Line (The pace-setter)
+    ctx.strokeStyle = "rgba(0, 240, 255, 0.2)";
+    ctx.beginPath(); ctx.moveTo(0, linePosV); ctx.lineTo(width, linePosV); ctx.stroke();
+
+    requestAnimationFrame(animate);
+}
+
+animate();
+</script>
 </body>
 </html>
